@@ -1,28 +1,26 @@
 import { isFunction } from '../utils';
-import { track, trigger, effect } from './effect';
+import { effect, track, trigger } from './effect';
 
-export function computed(getterOrOptions) {
+export function computed(getterOrOption) {
     let getter, setter;
-    if (isFunction(getterOrOptions)) {
-        getter = getterOrOptions;
+    if (isFunction(getterOrOption)) {
+        getter = getterOrOption;
         setter = () => {
-            console.warn('Write operation failed: computed value is readonly');
+            console.warn('computed is readonly');
         };
     } else {
-        getter = getterOrOptions.get;
-        setter = getterOrOptions.set;
+        getter = getterOrOption.get;
+        setter = getterOrOption.set;
     }
-
-    return new ComputedRefImpl(getter, setter);
+    return new ComputedImpl(getter, setter);
 }
 
 //懒计算，只有真正执行的时候才会运行 
-class ComputedRefImpl {
+class ComputedImpl {
     constructor(getter, setter) {
         this._setter = setter;
         this._value = undefined; //缓存它的值
         this._dirty = true; //标志依赖有没有更新
-        //
         this.effect = effect(getter, {
             lazy: true,
             scheduler: () => {
@@ -43,7 +41,7 @@ class ComputedRefImpl {
         return this._value;
     }
 
-    set value(val) {
-        this._setter(val);
+    set value(newValue) {
+        this._setter(newValue);
     }
 }

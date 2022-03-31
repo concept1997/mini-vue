@@ -1,6 +1,30 @@
-import { effect, ref, reactive } from "./reactivity";
+import { compile } from './compiler/compile';
+import {
+  createApp,
+  render,
+  h,
+  Text,
+  Fragment,
+  nextTick,
+  renderList,
+  withModel,
+  resolveComponent
+} from './runtime';
+import { reactive, ref, computed, effect } from './reactivity';
 
-const foo = (window.foo = ref(1));
-effect(() => {
-    console.log('foo:', foo.value)
-})
+export const MiniVue = (window.MiniVue = {
+  createApp,
+  render,
+  h,
+  Text,
+  Fragment,
+  nextTick,
+  reactive,
+  ref,
+  computed,
+  effect,
+  compile,
+  renderList,
+  withModel,
+  resolveComponent
+});

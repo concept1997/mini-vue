@@ -12,7 +12,6 @@ export const ElementTypes = {
     ELEMENT: 'ELEMENT',
     COMPONENT: 'COMPONENT',
 };
-
 //return一个根节点，接收一个children属性
 export function createRoot(children) {
     return {

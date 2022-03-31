@@ -1,34 +1,36 @@
-//公共方法
-export function isObject(value) {
-    return typeof value === 'object' && value !== null;
+//一些用到的方法
+export function isObject(target) {
+    return typeof target === 'object' && target !== null;
 }
 
-export function isFunction(value) {
-    return typeof value === 'function';
+export function isArray(target) {
+    return Array.isArray(target);
 }
 
-export function isArray(value) {
-    return Array.isArray(value);
+export function isString(target) {
+    return typeof target === 'string';
 }
 
-export function isString(value) {
-    return typeof value === 'string';
+export function isNumber(target) {
+    return typeof target === 'number';
 }
 
-export function isNumber(value) {
-    return typeof value === 'number';
+export function isBoolean(target) {
+    return typeof target === 'boolean';
 }
 
-export function hasChanged(value, oldValue) {
-    return value !== oldValue && (value === value || oldValue === oldValue);
+export function isFunction(target) {
+    return typeof target === 'function';
 }
 
-const camelizeRE = /-(\w)/g;
+export function hasChanged(oldValue, value) {
+    return oldValue !== value && !(Number.isNaN(oldValue) && Number.isNaN(value));
+}
+
 export function camelize(str) {
-    return str.replace(camelizeRE, (_, c) => (c ? c.toUpperCase() : ''));
+    return str.replace(/-(\w)/g, (_, c) => (c ? c.toUpperCase() : ''));
 }
 
-//codegen->props第一个字母大写
 export function capitalize(str) {
     return str[0].toUpperCase() + str.slice(1);
 }
